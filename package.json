@@ -1,0 +1,24 @@
+{
+  "name": "lotto-defence-optimizer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "build-ts": "tsc",
+    "start": "npm run serve",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/server.js",
+    "watch-ts": "tsc -w"
+  },
+  "author": "Tandy Carmichael",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.2"
+  },
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "express": "^4.16.4"
+  }
+}

@@ -1,0 +1,18 @@
+export enum Difficulty {
+    Practice,
+    VeryEasy,
+    Easy,
+    Normal,
+    Hard,
+    VeryHard,
+    Hell,
+    Inferno,
+    Lunatic,
+    Holic,
+    Epic,
+    Ultimate,
+    Impossible,
+    TheFinal,
+    HallOfFame,
+    TowerOfChallenge,
+}
