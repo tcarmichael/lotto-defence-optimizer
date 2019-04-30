@@ -22,10 +22,18 @@ export class SpecialtyList implements ISpecialtyList {
     public optimize(profile: IProfile, env: IEnvironment, ep: IStats, gems: IStats): void {
         let sp: number = this.allSpecialties
             .reduce((sum, current) => sum + current.cumulativePointCost(), 0);
-        const maxSp: number = profile.calcTotalSp();
+        const spBank: ISpecialty = this.allSpecialties.filter((eachSp) => eachSp.data.name === 'SP Bank')[0];
+        const spBankRounds: number = spBank.pointsBought * Math.floor((env.targetRound - 1) / 10) * 1000;
+        const maxSp: number = profile.calcTotalSp() + spBankRounds;
+
+        console.log('Max SP: %s', maxSp);
 
         while (sp < maxSp) {
             const spEfficiencies: Array<[ISpecialty, number]> = this.calcSpEfficiencies(env, ep, gems, profile.rune);
+
+            if (sp === 0) {
+                spEfficiencies.forEach((o) => console.log('Efficency: %d', o[1]));
+            }
 
             // Return if there isn't any SP (shouldn't happen) or if all efficienies are 0.
             if (spEfficiencies.length === 0 || spEfficiencies.every((o) => o[1] === 0)) {
@@ -37,9 +45,16 @@ export class SpecialtyList implements ISpecialtyList {
                 .filter((each) => each[0].data.requiredTitle <= profile.title)
                 .reduce((max, each) => each[1] > max[1] ? each : max);
 
-            sp += mostEfficient[0].nextPointCost();
-            mostEfficient[0].pointsBought++;
+            // Make sure that the next SP won't put us over the cap.
+            if (mostEfficient[0].nextPointCost() <= maxSp - sp) {
+                sp += mostEfficient[0].nextPointCost();
+                mostEfficient[0].pointsBought++;
+            } else {
+                break;
+            }
         }
+
+        console.log('Remaining SP: %d', maxSp - sp);
     }
 
     public calcStats(): IStats {
@@ -68,6 +83,7 @@ export class SpecialtyList implements ISpecialtyList {
         // Calculate total stats and current DPS.
         const totalStats: IStats = new Stats(env, spStats, ep, gems, rune);
         const currentDps: number = calcDps(totalStats, env);
+        console.log('Current DPS: %s', currentDps.toFixed(6));
 
         // Calculate the next SP efficiency for each SP.
         return this.allSpecialties.map((sp) => [sp, this.calcEfficiency(sp, currentDps, totalStats, env)]);
