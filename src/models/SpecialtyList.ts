@@ -111,7 +111,13 @@ export class SpecialtyList implements ISpecialtyList {
         const dpsGrow: number = newDps / oldDps - 1;
         const nextPointCost: number = sp.nextPointCost();
 
-        const e: number = Math.max(dpsGrow / nextPointCost, 0) * 10e7;
+        let e: number = Math.max(dpsGrow / nextPointCost, 0) * 10e7;
+
+        // Put a 3x team multiplier on team buffs.
+        if (env.helpful && sp.data.name.includes('Team ')) {
+            e *= 3;
+        }
+
         return e;
     }
 

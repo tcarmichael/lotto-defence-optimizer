@@ -15,6 +15,7 @@ export interface IEnvironment {
     haveAmon: boolean;
     haveSpearOfAdun: boolean;
     haveXelnagaKerrigan: boolean;
+    helpful: boolean;
     singleUnitBuff: boolean;
     duplicateUnitPenalty: number;
     limitBreak: number;
@@ -102,6 +103,7 @@ export class Environment implements IEnvironment {
     public haveAmon: boolean = false;
     public haveSpearOfAdun: boolean = false;
     public haveXelnagaKerrigan: boolean = false;
+    public helpful: boolean = false;
     public singleUnitBuff: boolean = false;
     public duplicateUnitPenalty: number = 0;
     public limitBreak: number = 0;
