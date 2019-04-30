@@ -118,7 +118,7 @@ export class Stats implements IStats {
     private calcAttackDamage(env: IEnvironment, sp: IStats, ep: IStats, gems: IStats, runeStats: IStats): number {
         // Note: This doesn't implement "general sharing buff", "special sharing buff", or monthly gems.
         // Make sure this.finalDamageIncrease is calculated before this function.
-        const preCalc: number = 100
+        const preCalc: number = 100 + 5
             + sp.attackDamage
             + runeStats.attackDamage
             + env.teamAttackDamage
@@ -145,7 +145,7 @@ export class Stats implements IStats {
     private calcAttackSpeed(env: IEnvironment, sp: IStats, ep: IStats, gems: IStats, runeStats: IStats): number {
         // Note: This doesn't implement "general sharing buff", "special sharing buff", or monthly gems.
         // My best efforts led me to believe that this isn't implemented in NA.
-        const as: number = sp.attackSpeed
+        const as: number = sp.attackSpeed + 5
             + runeStats.attackSpeed
             + env.teamAttackSpeed
             + gems.attackSpeed
@@ -157,7 +157,7 @@ export class Stats implements IStats {
     private calcCritChance(env: IEnvironment, sp: IStats, ep: IStats, runeStats: IStats): number {
         // Note: This doesn't implement "daily code", "general sharing buff",
         // "special sharing buff", or "alpha/solo crit gem".
-        const cc: number = sp.critChance
+        const cc: number = sp.critChance + 5
             + runeStats.critChance
             + env.teamCritChance
             + (env.haveArtifact ? EnvironmentConstants.ARTIFACT_CRIT_CHANCE : 0)
